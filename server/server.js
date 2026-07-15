@@ -15,6 +15,32 @@ app.use(cors({
 }));
 app.use(express.json());
 
+const mongoose = require("mongoose");
+
+// Ensure DB connection is active on every request (essential for serverless Vercel environment)
+app.use(async (req, res, next) => {
+  if (mongoose.connection.readyState === 0) {
+    console.log("📡 Database disconnected. Reconnecting...");
+    await connectDB();
+  }
+  next();
+});
+
+// Database connection status debug endpoint
+app.get("/api/db-status", (req, res) => {
+  res.json({
+    success: true,
+    mongoUriConfigured: !!process.env.MONGO_URI,
+    connectionState: mongoose.connection.readyState,
+    connectionStateDescription: {
+      0: "disconnected",
+      1: "connected",
+      2: "connecting",
+      3: "disconnecting"
+    }[mongoose.connection.readyState]
+  });
+});
+
 // Routes
 // const authRoutes = require("./routes/authRoutes");
 // const customerRoutes = require("./routes/customerRoutes");
