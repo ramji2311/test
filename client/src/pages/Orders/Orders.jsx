@@ -133,76 +133,78 @@ function Orders() {
           <h1>Orders</h1>
         </div>
 	
-        <table>
-          <thead>
-            <tr>
-              <th>Order Number</th>
-              <th>Customer</th>
-              <th>Phone</th>
-              <th>Dress</th>
-              <th>Booking</th>
-              <th>Due</th>
-              <th>Delivery Date</th>
-              <th>Amount</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+        <div className="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Order Number</th>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Dress</th>
+                <th>Booking</th>
+                <th>Due</th>
+                <th>Delivery Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
 
-          <tbody>
-            {loading ? (
-              <tr>
-                <td colSpan="10">Loading Orders...</td>
-              </tr>
-            ) : orders.length === 0 ? (
-              <tr>
-                <td colSpan="10">No Orders Found</td>
-              </tr>
-            ) : (
-              orders.map((order) => (
-                <tr key={order.orderId}>
-                  <td>{order.orderId}</td>
-                  <td>{order.customerName}</td>
-                  <td>{order.phoneNumber}</td>
-                  <td>{order.dressType}</td>
-	                  <td>{order.bookingDate || "-"}</td>
-	                  <td>{order.dueDate || "-"}</td>
-                  <td>{order.deliveredDate || "-"}</td>
-                  <td>₹ {order.totalAmount || 0}</td>
-	                  <td>{order.status}</td>
-	                  <td>
-	                    <div className="action-buttons">
-	                      <button
-	                        className="action-btn edit-btn"
-	                        onClick={() => handleEdit(order)}
-	                      >
-	                        Edit
-	                      </button>
-	                      <button
-	                        className="action-btn delete-btn"
-	                        onClick={() => handleDelete(order.orderId)}
-	                      >
-	                        Delete
-	                      </button>
-		                      <button
-		                        className="action-btn pay-btn"
-		                        onClick={() => handlePayment(order)}
-		                      >
-		                        Payment
-		                      </button>
-	                      <button
-	                        className="action-btn invoice-btn"
-	                        onClick={() => navigate(`/invoice/${order.orderId}`)}
-	                      >
-	                        Invoice
-	                      </button>
-		                    </div>
-	                  </td>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan="10">Loading Orders...</td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : orders.length === 0 ? (
+                <tr>
+                  <td colSpan="10">No Orders Found</td>
+                </tr>
+              ) : (
+                orders.map((order) => (
+                  <tr key={order.orderId}>
+                    <td>{order.orderId}</td>
+                    <td>{order.customerName}</td>
+                    <td>{order.phoneNumber}</td>
+                    <td>{order.dressType}</td>
+                    <td>{order.bookingDate || "-"}</td>
+                    <td>{order.dueDate || "-"}</td>
+                    <td>{order.deliveredDate || "-"}</td>
+                    <td>₹ {order.totalAmount || 0}</td>
+                    <td>{order.status}</td>
+                    <td>
+                      <div className="action-buttons">
+                        <button
+                          className="action-btn edit-btn"
+                          onClick={() => handleEdit(order)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="action-btn delete-btn"
+                          onClick={() => handleDelete(order.orderId)}
+                        >
+                          Delete
+                        </button>
+                        <button
+                          className="action-btn pay-btn"
+                          onClick={() => handlePayment(order)}
+                        >
+                          Payment
+                        </button>
+                        <button
+                          className="action-btn invoice-btn"
+                          onClick={() => navigate(`/invoice/${order.orderId}`)}
+                        >
+                          Invoice
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {editingOrder && (
