@@ -1,0 +1,94 @@
+.settings-container{
+    max-width:900px;
+    margin:auto;
+    padding:30px;
+}
+
+.settings-container h1{
+    color:#6D4C41;
+    margin-bottom:25px;
+}
+
+.settings-card,
+.about-card{
+    background:#fff;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    margin-bottom:25px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    margin-bottom:20px;
+}
+
+.form-group label{
+    margin-bottom:8px;
+    font-weight:600;
+    color:#555;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:15px;
+    transition:.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+    outline:none;
+    border-color:#6D4C41;
+    box-shadow:0 0 8px rgba(109,76,65,.2);
+}
+
+textarea{
+    resize:vertical;
+}
+
+.save-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#6D4C41;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.save-btn:hover{
+    background:#5D4037;
+}
+
+.about-card h2{
+    color:#6D4C41;
+    margin-bottom:20px;
+}
+
+.about-card p{
+    margin:10px 0;
+    font-size:15px;
+    color:#555;
+}
+
+@media(max-width:768px){
+
+.settings-container{
+    padding:15px;
+}
+
+.settings-card,
+.about-card{
+    padding:20px;
+}
+
+}

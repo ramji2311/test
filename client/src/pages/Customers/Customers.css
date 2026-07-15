@@ -1,0 +1,183 @@
+.customers-container {
+  padding: 40px;
+}
+
+.customers-container h1 {
+  color: #7b584d;
+  margin-bottom: 25px;
+}
+
+.search-box {
+  width: 350px;
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 25px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th {
+  background: #7b584d;
+  color: white;
+  padding: 15px;
+}
+
+td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.delete-btn {
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #c9302c;
+}
+
+.view-btn {
+  background: #0d6efd;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.customer-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup {
+  width: 700px;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.edit-btn {
+  background: #ffc107;
+  color: black;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.popup input {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.popup-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.measurement-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.measurement-grid input,
+.measurement-grid textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.save-btn {
+  margin-top: 20px;
+  padding: 12px 25px;
+  background: #6d4c41;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.action-buttons button {
+  min-width: 100px;
+  height: 42px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+}
+.measurement-wrapper{
+
+display:flex;
+
+gap:40px;
+
+align-items:flex-start;
+
+margin-top:20px;
+
+}
+.measurement-layout{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:flex-start;
+
+gap:40px;
+
+margin-top:20px;
+
+}
+
+.measurement-left{
+
+flex:1;
+
+}
+
+@media(max-width:1000px){
+
+.measurement-layout{
+
+flex-direction:column;
+
+}
+
+}

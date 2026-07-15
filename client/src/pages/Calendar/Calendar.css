@@ -1,0 +1,328 @@
+/* ===========================
+   Calendar Page
+=========================== */
+
+.calendar-page {
+  padding: 30px;
+  background: #f8f8f8;
+  min-height: 100vh;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.calendar-header h1 {
+  font-size: 36px;
+  color: #5D4037;
+}
+
+.calendar-header p {
+  color: #777;
+  margin-top: 8px;
+}
+
+.today-btn {
+  background: #8B4513;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: .3s;
+}
+
+.today-btn:hover {
+  background: #6D4C41;
+}
+
+/* ===========================
+   Main Layout
+=========================== */
+
+.calendar-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
+  margin-bottom: 35px;
+}
+
+/* ===========================
+   Calendar Card
+=========================== */
+
+.calendar-left {
+
+  background: white;
+
+  padding: 25px;
+
+  border-radius: 16px;
+
+  box-shadow: 0 4px 20px rgba(0,0,0,.08);
+
+}
+
+/* ===========================
+   Right Panel
+=========================== */
+
+.calendar-right {
+
+  background: white;
+
+  border-radius: 16px;
+
+  padding: 25px;
+
+  box-shadow: 0 4px 20px rgba(0,0,0,.08);
+
+}
+
+.calendar-right h2{
+
+color:#777;
+
+margin-bottom:10px;
+
+}
+
+.calendar-right h1{
+
+color:#5D4037;
+
+font-size:28px;
+
+margin-bottom:20px;
+
+}
+
+.calendar-right hr{
+
+margin:20px 0;
+
+border:none;
+
+height:1px;
+
+background:#eee;
+
+}
+
+.empty-box{
+
+height:250px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+background:#fafafa;
+
+border:2px dashed #ddd;
+
+border-radius:10px;
+
+color:#888;
+
+}
+
+/* ===========================
+   Festival Section
+=========================== */
+
+.festival-section{
+
+background:white;
+
+padding:25px;
+
+border-radius:16px;
+
+box-shadow:0 4px 20px rgba(0,0,0,.08);
+
+}
+
+.festival-section h2{
+
+margin-bottom:25px;
+
+color:#5D4037;
+
+}
+
+.festival-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+}
+
+.festival-card{
+
+padding:20px;
+
+border-radius:14px;
+
+text-align:center;
+
+transition:.3s;
+
+cursor:pointer;
+
+}
+
+.festival-card:hover{
+
+transform:translateY(-6px);
+
+}
+
+.festival-card h3{
+
+margin:15px 0 8px;
+
+}
+
+.festival{
+
+background:#FFF8E1;
+
+}
+
+.muhurtham{
+
+background:#E8F5E9;
+
+}
+
+.holiday{
+
+background:#FDECEC;
+
+}
+
+.religious{
+
+background:#E3F2FD;
+
+}
+
+/* ===========================
+   React Calendar
+=========================== */
+
+.react-calendar{
+
+width:100%;
+
+border:none;
+
+font-family:inherit;
+
+}
+
+.react-calendar__navigation{
+
+margin-bottom:20px;
+
+}
+
+.react-calendar__navigation button{
+
+font-size:18px;
+
+color:#5D4037;
+
+background:white;
+
+border:none;
+
+}
+
+.react-calendar__month-view__weekdays{
+
+font-weight:bold;
+
+text-transform:uppercase;
+
+color:#6D4C41;
+
+}
+
+.react-calendar__tile{
+
+height:90px;
+
+border-radius:12px;
+
+transition:.3s;
+
+}
+
+.react-calendar__tile:hover{
+
+background:#FFF3E0;
+
+}
+
+.react-calendar__tile--active{
+
+background:#8B4513 !important;
+
+color:white;
+
+}
+
+.react-calendar__tile--now{
+
+background:#FFE0B2;
+
+}
+
+/* ===========================
+ Responsive
+=========================== */
+
+@media(max-width:1000px){
+
+.calendar-content{
+
+grid-template-columns:1fr;
+
+}
+
+}
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.order-card {
+  background: #fafafa;
+  border-left: 5px solid #8B4513;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+.order-card h3 {
+  color: #5D4037;
+  margin-bottom: 10px;
+}
+
+.order-card p {
+  margin: 5px 0;
+  color: #666;
+}
+

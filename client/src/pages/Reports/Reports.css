@@ -1,0 +1,42 @@
+.reports-container {
+  width: 100%;
+}
+
+.reports-container h1 {
+  color: #6D4C41;
+  margin-bottom: 30px;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.report-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+  transition: .3s;
+}
+
+.report-card:hover {
+  transform: translateY(-5px);
+}
+
+.report-card h3 {
+  color: #777;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.report-card h2 {
+  color: #6D4C41;
+  font-size: 32px;
+}
+.report-card{
+
+cursor:pointer;
+
+}

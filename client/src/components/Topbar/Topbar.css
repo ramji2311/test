@@ -1,0 +1,101 @@
+.topbar{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:20px 30px;
+
+background:white;
+
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+margin-bottom:25px;
+
+}
+
+.topbar-left h3{
+
+color:#6d4c41;
+
+font-size:22px;
+
+}
+
+.topbar-right{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+}
+
+.topbar input{
+
+padding:10px 15px;
+
+width:250px;
+
+border:1px solid #ccc;
+
+border-radius:8px;
+
+font-size:15px;
+
+}
+
+.new-btn{
+
+padding:10px 18px;
+
+background:#6d4c41;
+
+color:white;
+
+border:none;
+
+border-radius:8px;
+
+cursor:pointer;
+
+font-size:15px;
+
+}
+
+.new-btn:hover{
+
+background:#5a3d33;
+
+}
+
+.logout-btn{
+
+padding:10px 18px;
+
+background:#d32f2f;
+
+color:white;
+
+border:none;
+
+border-radius:8px;
+
+cursor:pointer;
+
+font-size:15px;
+
+}
+
+.logout-btn:hover{
+
+background:#b71c1c;
+
+}
+
+.topbar button {
+    display: none;
+}
