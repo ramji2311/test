@@ -125,6 +125,16 @@ body {
   background: #523830;
 }
 
+.button-grid .print-action-btn {
+  background: #E65100;
+  color: white;
+  font-weight: 600;
+}
+
+.button-grid .print-action-btn:hover {
+  background: #BF360C;
+}
+
 .recent-orders table {
   width: 100%;
   border-collapse: collapse;

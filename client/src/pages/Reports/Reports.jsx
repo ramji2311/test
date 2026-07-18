@@ -6,6 +6,7 @@ import {
   getOrdersByReport,
 } from "../../services/reportService";
 import { formatDateTime12h, formatDateOnly } from "../../utils/dateFormatter";
+import { printReport } from "../../utils/printHelper";
 
 function Reports() {
   const [report, setReport] = useState({
@@ -49,73 +50,18 @@ function Reports() {
   };
 
   const handlePrint = () => {
-    const printWindow = window.open("", "_blank");
-    if (!printWindow) {
-      alert("Please allow popups to print reports.");
-      return;
+    printReport(selectedReport, reportOrders);
+  };
+
+  const handleDirectPrint = async (e, type) => {
+    e.stopPropagation();
+    try {
+      const orders = await getOrdersByReport(type);
+      printReport(type, orders);
+    } catch (error) {
+      console.error("Error direct printing report:", error);
+      alert("Failed to print report.");
     }
-    const html = `
-      <html>
-        <head>
-          <title>${selectedReport} List - MIARA DESIGNER HOUSE</title>
-          <style>
-            body { font-family: Arial, sans-serif; padding: 20px; color: #333; }
-            h2 { color: #6d4c41; margin-bottom: 20px; text-align: center; }
-            table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-            th, td { border: 1px solid #ddd; padding: 12px 10px; text-align: left; }
-            th { background-color: #6d4c41; color: white; }
-            tr:nth-child(even) { background-color: #f9f9f9; }
-            .footer { margin-top: 30px; text-align: center; font-size: 12px; color: #777; }
-            @media print {
-              body { padding: 0; }
-              @page { size: auto; margin: 20mm; }
-            }
-          </style>
-        </head>
-        <body>
-          <h2>${selectedReport} List</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Customer</th>
-                <th>Phone</th>
-                <th>Dress</th>
-                <th>Booking</th>
-                <th>Due</th>
-                <th>Delivery Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${reportOrders.map(order => `
-                <tr>
-                  <td>${order.orderId}</td>
-                  <td>${order.customerName}</td>
-                  <td>${order.phoneNumber}</td>
-                  <td>${order.dressType}</td>
-                  <td>${formatDateTime12h(order.bookingDate)}</td>
-                  <td>${formatDateOnly(order.dueDate)}</td>
-                  <td>${formatDateOnly(order.deliveredDate)}</td>
-                  <td>${order.status}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-          <div class="footer">
-            Generated on ${formatDateTime12h(new Date())} - MIARA DESIGNER HOUSE
-          </div>
-          <script>
-            window.onload = function() {
-              window.print();
-              window.close();
-            }
-          </script>
-        </body>
-      </html>
-    `;
-    printWindow.document.write(html);
-    printWindow.document.close();
   };
 
   return (
@@ -133,7 +79,16 @@ function Reports() {
             className="report-card"
             onClick={() => handleReportClick("Total Orders")}
           >
-            <h3>Total Orders</h3>
+            <div className="card-header-with-print">
+              <h3>Total Orders</h3>
+              <button
+                className="card-print-shortcut"
+                onClick={(e) => handleDirectPrint(e, "Total Orders")}
+                title="Direct Print Total Orders"
+              >
+                🖨️
+              </button>
+            </div>
             <h2>{report.totalOrders}</h2>
           </div>
 
@@ -141,7 +96,16 @@ function Reports() {
             className="report-card"
             onClick={() => handleReportClick("Pending Orders")}
           >
-            <h3>Pending Orders</h3>
+            <div className="card-header-with-print">
+              <h3>Pending Orders</h3>
+              <button
+                className="card-print-shortcut"
+                onClick={(e) => handleDirectPrint(e, "Pending Orders")}
+                title="Direct Print Pending Orders"
+              >
+                🖨️
+              </button>
+            </div>
             <h2>{report.pendingOrders}</h2>
           </div>
 
@@ -149,7 +113,16 @@ function Reports() {
             className="report-card"
             onClick={() => handleReportClick("Completed Orders")}
           >
-            <h3>Completed Orders</h3>
+            <div className="card-header-with-print">
+              <h3>Completed Orders</h3>
+              <button
+                className="card-print-shortcut"
+                onClick={(e) => handleDirectPrint(e, "Completed Orders")}
+                title="Direct Print Completed Orders"
+              >
+                🖨️
+              </button>
+            </div>
             <h2>{report.completedOrders}</h2>
           </div>
 
@@ -157,7 +130,16 @@ function Reports() {
             className="report-card"
             onClick={() => handleReportClick("Today's Orders")}
           >
-            <h3>Today's Orders</h3>
+            <div className="card-header-with-print">
+              <h3>Today's Orders</h3>
+              <button
+                className="card-print-shortcut"
+                onClick={(e) => handleDirectPrint(e, "Today's Orders")}
+                title="Direct Print Today's Orders"
+              >
+                🖨️
+              </button>
+            </div>
             <h2>{report.todaysOrders}</h2>
           </div>
 
@@ -165,7 +147,16 @@ function Reports() {
             className="report-card"
             onClick={() => handleReportClick("Today's Deliveries")}
           >
-            <h3>Today's Deliveries</h3>
+            <div className="card-header-with-print">
+              <h3>Today's Deliveries</h3>
+              <button
+                className="card-print-shortcut"
+                onClick={(e) => handleDirectPrint(e, "Today's Deliveries")}
+                title="Direct Print Today's Deliveries"
+              >
+                🖨️
+              </button>
+            </div>
             <h2>{report.todaysDeliveries}</h2>
           </div>
 

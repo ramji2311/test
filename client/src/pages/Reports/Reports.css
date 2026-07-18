@@ -80,3 +80,36 @@ cursor:pointer;
 .popup-actions-wrapper .close-btn:hover {
   background-color: #d5d5d5;
 }
+
+/* Card Print Shortcut Styling */
+.card-header-with-print {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.card-header-with-print h3 {
+  margin: 0;
+  color: #777;
+  font-size: 16px;
+}
+
+.card-print-shortcut {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: transform 0.2s, background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-print-shortcut:hover {
+  background-color: rgba(109, 76, 65, 0.1);
+  transform: scale(1.15);
+}

@@ -5,7 +5,9 @@ import "./Dashboard.css";
 
 import Header from "../../components/Header/Header";
 import { getDashboardStats } from "../../services/dashboardService";
+import { getOrdersByReport } from "../../services/reportService";
 import { formatDateOnly } from "../../utils/dateFormatter";
+import { printReport } from "../../utils/printHelper";
 
 function Dashboard() {
 
@@ -33,6 +35,16 @@ function Dashboard() {
     loadDashboard();
 
   }, []);
+
+  const handlePrintPending = async () => {
+    try {
+      const orders = await getOrdersByReport("Pending Orders");
+      printReport("Pending Orders", orders);
+    } catch (error) {
+      console.error("Error direct printing pending orders:", error);
+      alert("Failed to print report.");
+    }
+  };
 
   return (
     <div className="dashboard">
@@ -91,8 +103,16 @@ function Dashboard() {
             📅 Calendar
           </button>
 
+          <button onClick={() => navigate("/reports")}>
+            📊 Reports
+          </button>
+
           <button onClick={() => navigate("/settings")}>
             ⚙️ Settings
+          </button>
+
+          <button className="print-action-btn" onClick={handlePrintPending}>
+            🖨️ Print Pending
           </button>
 
         </div>
