@@ -94,9 +94,10 @@ color:white;
     top: 0;
     z-index: 100;
     background: white;
+    padding: 0 10px;
   }
   .logo {
-    padding: 15px;
+    padding: 10px;
     border-bottom: none;
   }
   .logo h2 {
@@ -108,33 +109,45 @@ color:white;
   }
   .sidebar nav {
     flex-direction: row;
-    padding: 5px;
-    gap: 5px;
+    padding: 5px 0;
+    gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+  .sidebar nav::-webkit-scrollbar {
+    display: none;
   }
   .sidebar nav a {
-    padding: 8px 10px;
+    padding: 8px 12px;
     margin-bottom: 0;
-    gap: 5px;
+    gap: 6px;
     font-size: 12px;
+    flex-shrink: 0;
   }
 }
 
-@media (max-width: 580px) {
-  .logo h2 {
+@media (max-width: 640px) {
+  .logo {
     display: none;
   }
   .sidebar {
     justify-content: center;
   }
+  .sidebar nav {
+    width: 100%;
+    justify-content: space-around;
+  }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 520px) {
   .sidebar nav a {
     font-size: 0;
-    padding: 10px;
+    padding: 12px;
+    border-radius: 50%;
   }
   .sidebar nav a svg {
-    font-size: 18px;
+    font-size: 20px;
     margin: 0;
   }
 }
