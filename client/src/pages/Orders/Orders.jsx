@@ -5,6 +5,7 @@ import "./Orders.css";
 import { getOrders, updateOrder, deleteOrder } from "../../services/orderService";
 import { savePayment, getTotalPaid } from "../../services/paymentService";
 import { generatePaymentId } from "../../utils/paymentIdGenerator";
+import { formatDateTime12h, formatDateOnly } from "../../utils/dateFormatter";
 
 function Orders() {
   const navigate = useNavigate();
@@ -166,9 +167,9 @@ function Orders() {
                     <td>{order.customerName}</td>
                     <td>{order.phoneNumber}</td>
                     <td>{order.dressType}</td>
-                    <td>{order.bookingDate || "-"}</td>
-                    <td>{order.dueDate || "-"}</td>
-                    <td>{order.deliveredDate || "-"}</td>
+                    <td>{formatDateTime12h(order.bookingDate)}</td>
+                    <td>{formatDateOnly(order.dueDate)}</td>
+                    <td>{formatDateOnly(order.deliveredDate)}</td>
                     <td>₹ {order.totalAmount || 0}</td>
                     <td>{order.status}</td>
                     <td>

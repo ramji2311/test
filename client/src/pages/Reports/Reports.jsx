@@ -5,6 +5,7 @@ import {
   getReportData,
   getOrdersByReport,
 } from "../../services/reportService";
+import { formatDateTime12h, formatDateOnly } from "../../utils/dateFormatter";
 
 function Reports() {
   const [report, setReport] = useState({
@@ -93,16 +94,16 @@ function Reports() {
                   <td>${order.customerName}</td>
                   <td>${order.phoneNumber}</td>
                   <td>${order.dressType}</td>
-                  <td>${order.bookingDate || "-"}</td>
-                  <td>${order.dueDate || "-"}</td>
-                  <td>${order.deliveredDate || "-"}</td>
+                  <td>${formatDateTime12h(order.bookingDate)}</td>
+                  <td>${formatDateOnly(order.dueDate)}</td>
+                  <td>${formatDateOnly(order.deliveredDate)}</td>
                   <td>${order.status}</td>
                 </tr>
               `).join('')}
             </tbody>
           </table>
           <div class="footer">
-            Generated on ${new Date().toLocaleDateString("en-GB")} - MIARA DESIGNER HOUSE
+            Generated on ${formatDateTime12h(new Date())} - MIARA DESIGNER HOUSE
           </div>
           <script>
             window.onload = function() {
@@ -227,9 +228,9 @@ function Reports() {
                         <td>{order.customerName}</td>
                         <td>{order.phoneNumber}</td>
                         <td>{order.dressType}</td>
-                        <td>{order.bookingDate || "-"}</td>
-                        <td>{order.dueDate || "-"}</td>
-                        <td>{order.deliveredDate || "-"}</td>
+                        <td>{formatDateTime12h(order.bookingDate)}</td>
+                        <td>{formatDateOnly(order.dueDate)}</td>
+                        <td>{formatDateOnly(order.deliveredDate)}</td>
                         <td>{order.status}</td>
                       </tr>
                     ))

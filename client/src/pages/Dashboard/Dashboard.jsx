@@ -5,6 +5,7 @@ import "./Dashboard.css";
 
 import Header from "../../components/Header/Header";
 import { getDashboardStats } from "../../services/dashboardService";
+import { formatDateOnly } from "../../utils/dateFormatter";
 
 function Dashboard() {
 
@@ -141,7 +142,7 @@ function Dashboard() {
 
                     <td>{order.dressType}</td>
 
-                    <td>{order.dueDate}</td>
+                    <td>{formatDateOnly(order.dueDate)}</td>
 
                     <td>{order.status}</td>
 
@@ -198,7 +199,7 @@ function Dashboard() {
 
                     <td>{order.dressType}</td>
 
-                    <td>{order.dueDate}</td>
+                    <td>{formatDateOnly(order.dueDate)}</td>
 
                     <td>{order.status}</td>
 

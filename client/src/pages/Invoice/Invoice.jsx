@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getInvoice } from "../../services/invoiceService";
+import { formatDateTime12h, formatDateOnly } from "../../utils/dateFormatter";
 import "./Invoice.css";
 
 function Invoice() {
@@ -65,7 +66,7 @@ function Invoice() {
 
             <p><strong>Invoice No :</strong> {order.orderId}</p>
 
-            <p><strong>Date :</strong> {new Date().toLocaleDateString()}</p>
+            <p><strong>Date :</strong> {formatDateTime12h(order.bookingDate)}</p>
 
           </div>
 
@@ -73,7 +74,7 @@ function Invoice() {
 
             <p><strong>Status :</strong> {order.status}</p>
 
-            <p><strong>Delivery :</strong> {order.dueDate}</p>
+            <p><strong>Delivery :</strong> {formatDateOnly(order.dueDate)}</p>
 
           </div>
 
