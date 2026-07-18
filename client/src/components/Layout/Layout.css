@@ -13,3 +13,12 @@
 .page-content{
     padding:30px;
 }
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+  .page-content {
+    padding: 15px;
+  }
+}

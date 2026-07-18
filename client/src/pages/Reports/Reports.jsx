@@ -47,6 +47,76 @@ function Reports() {
     }
   };
 
+  const handlePrint = () => {
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) {
+      alert("Please allow popups to print reports.");
+      return;
+    }
+    const html = `
+      <html>
+        <head>
+          <title>${selectedReport} List - MIARA DESIGNER HOUSE</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; color: #333; }
+            h2 { color: #6d4c41; margin-bottom: 20px; text-align: center; }
+            table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+            th, td { border: 1px solid #ddd; padding: 12px 10px; text-align: left; }
+            th { background-color: #6d4c41; color: white; }
+            tr:nth-child(even) { background-color: #f9f9f9; }
+            .footer { margin-top: 30px; text-align: center; font-size: 12px; color: #777; }
+            @media print {
+              body { padding: 0; }
+              @page { size: auto; margin: 20mm; }
+            }
+          </style>
+        </head>
+        <body>
+          <h2>${selectedReport} List</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Dress</th>
+                <th>Booking</th>
+                <th>Due</th>
+                <th>Delivery Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${reportOrders.map(order => `
+                <tr>
+                  <td>${order.orderId}</td>
+                  <td>${order.customerName}</td>
+                  <td>${order.phoneNumber}</td>
+                  <td>${order.dressType}</td>
+                  <td>${order.bookingDate || "-"}</td>
+                  <td>${order.dueDate || "-"}</td>
+                  <td>${order.deliveredDate || "-"}</td>
+                  <td>${order.status}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+          <div class="footer">
+            Generated on ${new Date().toLocaleDateString("en-GB")} - MIARA DESIGNER HOUSE
+          </div>
+          <script>
+            window.onload = function() {
+              window.print();
+              window.close();
+            }
+          </script>
+        </body>
+      </html>
+    `;
+    printWindow.document.write(html);
+    printWindow.document.close();
+  };
+
   return (
     <Layout>
       <div className="reports-container">
@@ -130,47 +200,54 @@ function Reports() {
 
             <h2>{selectedReport} List</h2>
 
-            <table>
-              <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Customer</th>
-                  <th>Phone</th>
-	                  <th>Dress</th>
-	                  <th>Booking</th>
-	                  <th>Due</th>
-	                  <th>Delivery Date</th>
-	                  <th>Status</th>
-                </tr>
-              </thead>
+            <div className="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Phone</th>
+                    <th>Dress</th>
+                    <th>Booking</th>
+                    <th>Due</th>
+                    <th>Delivery Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
 
-              <tbody>
-                {reportOrders.length === 0 ? (
-	                  <tr>
-		                    <td colSpan="8">No Orders Found</td>
-	                  </tr>
-                ) : (
-                  reportOrders.map((order) => (
-                    <tr key={order.orderId}>
-                      <td>{order.orderId}</td>
-                      <td>{order.customerName}</td>
-                      <td>{order.phoneNumber}</td>
-	                      <td>{order.dressType}</td>
-	                      <td>{order.bookingDate || "-"}</td>
-	                      <td>{order.dueDate || "-"}</td>
-	                      <td>{order.deliveredDate || "-"}</td>
-	                      <td>{order.status}</td>
+                <tbody>
+                  {reportOrders.length === 0 ? (
+                    <tr>
+                      <td colSpan="8">No Orders Found</td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  ) : (
+                    reportOrders.map((order) => (
+                      <tr key={order.orderId}>
+                        <td>{order.orderId}</td>
+                        <td>{order.customerName}</td>
+                        <td>{order.phoneNumber}</td>
+                        <td>{order.dressType}</td>
+                        <td>{order.bookingDate || "-"}</td>
+                        <td>{order.dueDate || "-"}</td>
+                        <td>{order.deliveredDate || "-"}</td>
+                        <td>{order.status}</td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
 
-            <br />
-
-            <button onClick={() => setSelectedReport("")}>
-              Close
-            </button>
+            <div className="popup-actions-wrapper">
+              {(selectedReport === "Pending Orders" || selectedReport === "Completed Orders") && (
+                <button className="print-btn" onClick={handlePrint}>
+                  🖨️ Print
+                </button>
+              )}
+              <button className="close-btn" onClick={() => setSelectedReport("")}>
+                Close
+              </button>
+            </div>
 
           </div>
         </div>

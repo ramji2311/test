@@ -181,3 +181,16 @@ flex-direction:column;
 }
 
 }
+
+@media (max-width: 768px) {
+  .customers-container {
+    padding: 15px;
+  }
+  .popup {
+    width: 95%;
+    padding: 20px 15px;
+  }
+  .measurement-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -40,3 +40,43 @@
 cursor:pointer;
 
 }
+
+/* Reports Popup & Responsive Table Styles */
+.reports-container .popup {
+  width: 90%;
+  max-width: 900px;
+}
+
+.popup-actions-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.popup-actions-wrapper button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.popup-actions-wrapper .print-btn {
+  background-color: #6D4C41;
+  color: white;
+}
+
+.popup-actions-wrapper .print-btn:hover {
+  background-color: #5D4037;
+}
+
+.popup-actions-wrapper .close-btn {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.popup-actions-wrapper .close-btn:hover {
+  background-color: #d5d5d5;
+}

@@ -141,3 +141,21 @@ body {
   background: #6D4C41;
   color: white;
 }
+
+@media (max-width: 768px) {
+  .dashboard {
+    width: 100%;
+    padding: 15px;
+  }
+  .dashboard-cards {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .button-grid {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  }
+  .button-grid button {
+    padding: 12px;
+    font-size: 14px;
+  }
+}

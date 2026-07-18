@@ -81,3 +81,60 @@ background:#6D4C41;
 color:white;
 
 }
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+  }
+  .logo {
+    padding: 15px;
+    border-bottom: none;
+  }
+  .logo h2 {
+    font-size: 18px;
+    margin-bottom: 0;
+  }
+  .logo p {
+    display: none;
+  }
+  .sidebar nav {
+    flex-direction: row;
+    padding: 5px;
+    gap: 5px;
+  }
+  .sidebar nav a {
+    padding: 8px 10px;
+    margin-bottom: 0;
+    gap: 5px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 580px) {
+  .logo h2 {
+    display: none;
+  }
+  .sidebar {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar nav a {
+    font-size: 0;
+    padding: 10px;
+  }
+  .sidebar nav a svg {
+    font-size: 18px;
+    margin: 0;
+  }
+}

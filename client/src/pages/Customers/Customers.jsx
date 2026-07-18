@@ -142,51 +142,53 @@ function Customers() {
         ) : customers.length === 0 ? (
           <h3>No Customers Found</h3>
         ) : (
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Phone Number</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {customers.map((customer) => (
-                <tr key={customer.phoneNumber}>
-                  <td>{customer.customerName}</td>
-                  <td>{customer.phoneNumber}</td>
-                  <td>
-
-                    <div className="action-buttons">
-
-                      <button
-                        className="view-btn"
-                        onClick={() => handleView(customer)}
-                      >
-                        👁 View
-                      </button>
-
-                      <button
-                        className="edit-btn"
-                        onClick={() => handleEdit(customer)}
-                      >
-                        ✏ Edit
-                      </button>
-
-                      <button
-                        className="delete-btn"
-                        onClick={() => handleDelete(customer.phoneNumber)}
-                      >
-                        🗑 Delete
-                      </button>
-
-                    </div>
-
-                  </td>
+          <div className="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Phone Number</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {customers.map((customer) => (
+                  <tr key={customer.phoneNumber}>
+                    <td>{customer.customerName}</td>
+                    <td>{customer.phoneNumber}</td>
+                    <td>
+
+                      <div className="action-buttons">
+
+                        <button
+                          className="view-btn"
+                          onClick={() => handleView(customer)}
+                        >
+                          👁 View
+                        </button>
+
+                        <button
+                          className="edit-btn"
+                          onClick={() => handleEdit(customer)}
+                        >
+                          ✏ Edit
+                        </button>
+
+                        <button
+                          className="delete-btn"
+                          onClick={() => handleDelete(customer.phoneNumber)}
+                        >
+                          🗑 Delete
+                        </button>
+
+                      </div>
+
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
 
         {/* View Customer Popup */}
@@ -208,24 +210,26 @@ function Customers() {
               {customerOrders.length === 0 ? (
                 <p>No Orders Found</p>
               ) : (
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Order ID</th>
-                      <th>Dress</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {customerOrders.map((order) => (
-                      <tr key={order.orderId}>
-                        <td>{order.orderId}</td>
-                        <td>{order.dressType}</td>
-                        <td>{order.status}</td>
+                <div className="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Dress</th>
+                        <th>Status</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {customerOrders.map((order) => (
+                        <tr key={order.orderId}>
+                          <td>{order.orderId}</td>
+                          <td>{order.dressType}</td>
+                          <td>{order.status}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               )}
 
               <hr />

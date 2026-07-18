@@ -104,55 +104,57 @@ function Dashboard() {
 
         <h2>Recent Orders</h2>
 
-        <table>
+        <div className="table-responsive">
+          <table>
 
-          <thead>
-
-            <tr>
-              <th>Order ID</th>
-              <th>Customer</th>
-              <th>Dress Type</th>
-              <th>Due Date</th>
-              <th>Status</th>
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {stats.recentOrders.length === 0 ? (
+            <thead>
 
               <tr>
-                <td colSpan="5">
-                  No Orders Available
-                </td>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Dress Type</th>
+                <th>Due Date</th>
+                <th>Status</th>
               </tr>
 
-            ) : (
+            </thead>
 
-              stats.recentOrders.map((order) => (
+            <tbody>
 
-                <tr key={order.orderId}>
+              {stats.recentOrders.length === 0 ? (
 
-                  <td>{order.orderId}</td>
-
-                  <td>{order.customerName}</td>
-
-                  <td>{order.dressType}</td>
-
-                  <td>{order.dueDate}</td>
-
-                  <td>{order.status}</td>
-
+                <tr>
+                  <td colSpan="5">
+                    No Orders Available
+                  </td>
                 </tr>
 
-              ))
+              ) : (
 
-            )}
+                stats.recentOrders.map((order) => (
 
-          </tbody>
+                  <tr key={order.orderId}>
 
-        </table>
+                    <td>{order.orderId}</td>
+
+                    <td>{order.customerName}</td>
+
+                    <td>{order.dressType}</td>
+
+                    <td>{order.dueDate}</td>
+
+                    <td>{order.status}</td>
+
+                  </tr>
+
+                ))
+
+              )}
+
+            </tbody>
+
+          </table>
+        </div>
 
       </section>
 
@@ -162,52 +164,54 @@ function Dashboard() {
 
         <h2>Upcoming Due Orders</h2>
 
-        <table>
+        <div className="table-responsive">
+          <table>
 
-          <thead>
-
-            <tr>
-              <th>Customer</th>
-              <th>Dress</th>
-              <th>Due Date</th>
-              <th>Status</th>
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {stats.upcomingDueOrders.length === 0 ? (
+            <thead>
 
               <tr>
-                <td colSpan="4">
-                  No Upcoming Orders
-                </td>
+                <th>Customer</th>
+                <th>Dress</th>
+                <th>Due Date</th>
+                <th>Status</th>
               </tr>
 
-            ) : (
+            </thead>
 
-              stats.upcomingDueOrders.map((order) => (
+            <tbody>
 
-                <tr key={order.orderId}>
+              {stats.upcomingDueOrders.length === 0 ? (
 
-                  <td>{order.customerName}</td>
-
-                  <td>{order.dressType}</td>
-
-                  <td>{order.dueDate}</td>
-
-                  <td>{order.status}</td>
-
+                <tr>
+                  <td colSpan="4">
+                    No Upcoming Orders
+                  </td>
                 </tr>
 
-              ))
+              ) : (
 
-            )}
+                stats.upcomingDueOrders.map((order) => (
 
-          </tbody>
+                  <tr key={order.orderId}>
 
-        </table>
+                    <td>{order.customerName}</td>
+
+                    <td>{order.dressType}</td>
+
+                    <td>{order.dueDate}</td>
+
+                    <td>{order.status}</td>
+
+                  </tr>
+
+                ))
+
+              )}
+
+            </tbody>
+
+          </table>
+        </div>
 
       </section>
 

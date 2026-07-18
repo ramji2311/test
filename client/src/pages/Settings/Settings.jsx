@@ -134,7 +134,7 @@ function Settings() {
 
           <p><strong>Version :</strong> 1.0</p>
 
-          <p><strong>Developed By :</strong> Raman Kishore</p>
+          <p><strong>Developed By :</strong> Ramya Kishore</p>
 
         </div>
 

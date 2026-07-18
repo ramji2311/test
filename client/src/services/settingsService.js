@@ -2,7 +2,7 @@ const STORAGE_KEY = "miara_settings";
 
 const defaultSettings = {
   shopName: "Miara Designer House",
-  ownerName: "Raman",
+  ownerName: "Ramya",
   phone: "",
   address: "",
   maxOrdersPerDay: 20,
