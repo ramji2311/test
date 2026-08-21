@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import "./Reports.css";
 import {
@@ -22,6 +22,8 @@ function Reports() {
 
   const [selectedReport, setSelectedReport] = useState("");
   const [reportOrders, setReportOrders] = useState([]);
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -42,22 +44,39 @@ function Reports() {
     setSelectedReport(type);
     try {
       const orders = await getOrdersByReport(type);
-      setReportOrders(orders);
+      setReportOrders(orders || []);
     } catch (error) {
       console.error("Error loading report orders:", error);
       setReportOrders([]);
     }
   };
 
+  const handleCloseReport = () => {
+    setSelectedReport("");
+    setFromDate("");
+    setToDate("");
+  };
+
+  const filteredReportOrders = useMemo(() => {
+    return reportOrders.filter((order) => {
+      if (selectedReport === "Pending Orders" || selectedReport === "Completed Orders") {
+        const orderDate = order.bookingDate ? order.bookingDate.split("T")[0] : "";
+        if (fromDate && orderDate < fromDate) return false;
+        if (toDate && orderDate > toDate) return false;
+      }
+      return true;
+    });
+  }, [reportOrders, selectedReport, fromDate, toDate]);
+
   const handlePrint = () => {
-    printReport(selectedReport, reportOrders);
+    printReport(selectedReport, filteredReportOrders);
   };
 
   const handleDirectPrint = async (e, type) => {
     e.stopPropagation();
     try {
       const orders = await getOrdersByReport(type);
-      printReport(type, orders);
+      printReport(type, orders || []);
     } catch (error) {
       console.error("Error direct printing report:", error);
       alert("Failed to print report.");
@@ -183,7 +202,7 @@ function Reports() {
       {selectedReport && (
         <div
           className="edit-popup"
-          onClick={() => setSelectedReport("")}
+          onClick={handleCloseReport}
         >
           <div
             className="popup"
@@ -191,6 +210,27 @@ function Reports() {
           >
 
             <h2>{selectedReport} List</h2>
+
+            {(selectedReport === "Pending Orders" || selectedReport === "Completed Orders") && (
+              <div className="popup-date-filters">
+                <div className="popup-date-field">
+                  <label>From Date:</label>
+                  <input
+                    type="date"
+                    value={fromDate}
+                    onChange={(e) => setFromDate(e.target.value)}
+                  />
+                </div>
+                <div className="popup-date-field">
+                  <label>To Date:</label>
+                  <input
+                    type="date"
+                    value={toDate}
+                    onChange={(e) => setToDate(e.target.value)}
+                  />
+                </div>
+              </div>
+            )}
 
             <div className="table-responsive">
               <table>
@@ -208,12 +248,12 @@ function Reports() {
                 </thead>
 
                 <tbody>
-                  {reportOrders.length === 0 ? (
+                  {filteredReportOrders.length === 0 ? (
                     <tr>
                       <td colSpan="8">No Orders Found</td>
                     </tr>
                   ) : (
-                    reportOrders.map((order) => (
+                    filteredReportOrders.map((order) => (
                       <tr key={order.orderId}>
                         <td>{order.orderId}</td>
                         <td>{order.customerName}</td>
@@ -236,7 +276,7 @@ function Reports() {
                   🖨️ Print
                 </button>
               )}
-              <button className="close-btn" onClick={() => setSelectedReport("")}>
+              <button className="close-btn" onClick={handleCloseReport}>
                 Close
               </button>
             </div>

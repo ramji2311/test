@@ -36,6 +36,8 @@ export const printReport = (reportType, orders) => {
               <th>Booking</th>
               <th>Due</th>
               <th>Delivery Date</th>
+              <th>Amount</th>
+              <th>Paid / Balance</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -49,6 +51,8 @@ export const printReport = (reportType, orders) => {
                 <td>${formatDateTime12h(order.bookingDate)}</td>
                 <td>${formatDateOnly(order.dueDate)}</td>
                 <td>${formatDateOnly(order.deliveredDate)}</td>
+                <td>₹ ${order.totalAmount || 0}</td>
+                <td>Paid: ₹${order.advanceAmount || 0}<br/>Bal: ₹${order.balanceAmount || 0}</td>
                 <td>${order.status}</td>
               </tr>
             `).join('')}

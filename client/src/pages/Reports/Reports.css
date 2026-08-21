@@ -113,3 +113,54 @@ cursor:pointer;
   background-color: rgba(109, 76, 65, 0.1);
   transform: scale(1.15);
 }
+
+/* Date Filters Inside Popup styling */
+.popup-date-filters {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  background: #fdfbf7;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ebdcd0;
+  justify-content: center;
+}
+
+.popup-date-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.popup-date-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #5d4037;
+}
+
+.popup-date-field input {
+  padding: 8px 12px;
+  border: 1px solid #d7ccc8;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  background: white;
+}
+
+.popup-date-field input:focus {
+  border-color: #6d4c41;
+}
+
+@media (max-width: 600px) {
+  .popup-date-filters {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .popup-date-field {
+    justify-content: space-between;
+  }
+  .popup-date-field input {
+    width: 65%;
+  }
+}

@@ -12,10 +12,7 @@ function Orders() {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
   const [editingOrder, setEditingOrder] = useState(null);
-  const [newPaymentAmount, setNewPaymentAmount] = useState("");
   const [loading, setLoading] = useState(true);
 
   const today = new Date().toISOString().split("T")[0];
@@ -57,7 +54,6 @@ function Orders() {
 
   const handleEdit = (order) => {
     setEditingOrder({ ...order });
-    setNewPaymentAmount("");
   };
 
   const handleSaveEdit = async () => {
@@ -81,40 +77,10 @@ function Orders() {
 
     let updatedOrder = { ...editingOrder };
 
-    // If newPaymentAmount is entered, process it
-    if (newPaymentAmount && Number(newPaymentAmount) > 0) {
-      const pAmt = Number(newPaymentAmount);
-      const currentPaid = Number(updatedOrder.advanceAmount || 0);
-      const balance = Number(updatedOrder.totalAmount || 0) - currentPaid;
-
-      if (pAmt > balance) {
-        alert("Payment exceeds the remaining balance.");
-        return;
-      }
-
-      try {
-        await savePayment({
-          paymentId: generatePaymentId(),
-          orderId: updatedOrder.orderId,
-          customerName: updatedOrder.customerName,
-          amount: pAmt,
-          date: new Date().toISOString().split("T")[0],
-        });
-
-        updatedOrder.advanceAmount = currentPaid + pAmt;
-        updatedOrder.balanceAmount = Number(updatedOrder.totalAmount || 0) - updatedOrder.advanceAmount;
-      } catch (error) {
-        console.error("Error saving payment:", error);
-        alert("Failed to save payment transaction");
-        return;
-      }
-    }
-
     try {
       await updateOrder(updatedOrder);
       alert("Order Updated Successfully ✅");
       setEditingOrder(null);
-      setNewPaymentAmount("");
       await loadOrders();
     } catch (error) {
       console.error("Error updating order:", error);
@@ -138,29 +104,15 @@ function Orders() {
 
   const filteredOrders = useMemo(() => {
     return orders.filter((order) => {
-      // 1. Search term filter (Order Number, Customer Name, Phone Number)
       const searchLower = searchTerm.toLowerCase();
-      const matchesSearch =
+      return (
         !searchTerm ||
         order.orderId.toLowerCase().includes(searchLower) ||
         order.customerName.toLowerCase().includes(searchLower) ||
-        order.phoneNumber.toLowerCase().includes(searchLower);
-
-      // 2. Date filter (applies only to Pending status)
-      let matchesDate = true;
-      if (fromDate || toDate) {
-        if (order.status !== "Pending") {
-          matchesDate = false;
-        } else {
-          const orderDate = order.bookingDate ? order.bookingDate.split("T")[0] : "";
-          if (fromDate && orderDate < fromDate) matchesDate = false;
-          if (toDate && orderDate > toDate) matchesDate = false;
-        }
-      }
-
-      return matchesSearch && matchesDate;
+        order.phoneNumber.toLowerCase().includes(searchLower)
+      );
     });
-  }, [orders, searchTerm, fromDate, toDate]);
+  }, [orders, searchTerm]);
 
   return (
     <Layout>
@@ -178,45 +130,6 @@ function Orders() {
           </div>
         </div>
 
-        {/* Date Filter & Print Section */}
-        <div className="pending-filter-container">
-          <div className="date-inputs">
-            <div className="date-field">
-              <label>From Date:</label>
-              <input
-                type="date"
-                value={fromDate}
-                onChange={(e) => setFromDate(e.target.value)}
-              />
-            </div>
-            <div className="date-field">
-              <label>To Date:</label>
-              <input
-                type="date"
-                value={toDate}
-                onChange={(e) => setToDate(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="filter-actions">
-            {(fromDate || toDate) && (
-              <button
-                className="clear-btn"
-                onClick={() => {
-                  setFromDate("");
-                  setToDate("");
-                }}
-              >
-                Clear Filter
-              </button>
-            )}
-            {fromDate && toDate && (
-              <button className="print-btn" onClick={() => window.print()}>
-                🖨 Print Pending List
-              </button>
-            )}
-          </div>
-        </div>
 
         <div className="table-responsive">
           <table>
@@ -361,6 +274,51 @@ function Orders() {
             </div>
 
             <div className="popup-section">
+              <h3>Payment & Billing</h3>
+              <div className="form-grid">
+                <div className="form-group-third">
+                  <label>Total (₹)</label>
+                  <input
+                    type="number"
+                    value={editingOrder.totalAmount || ""}
+                    onChange={(e) => {
+                      const total = Number(e.target.value) || 0;
+                      setEditingOrder({
+                        ...editingOrder,
+                        totalAmount: total,
+                        balanceAmount: total - (Number(editingOrder.advanceAmount) || 0),
+                      });
+                    }}
+                  />
+                </div>
+                <div className="form-group-third">
+                  <label>Paid (₹)</label>
+                  <input
+                    type="number"
+                    value={editingOrder.advanceAmount || ""}
+                    onChange={(e) => {
+                      const adv = Number(e.target.value) || 0;
+                      setEditingOrder({
+                        ...editingOrder,
+                        advanceAmount: adv,
+                        balanceAmount: (Number(editingOrder.totalAmount) || 0) - adv,
+                      });
+                    }}
+                  />
+                </div>
+                <div className="form-group-third">
+                  <label>Balance (₹)</label>
+                  <input
+                    type="text"
+                    value={editingOrder.balanceAmount || 0}
+                    readOnly
+                    className="readonly-input"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="popup-section">
               <h3>Status & Delivery</h3>
               <div className="form-grid">
                 <div className="form-group-half">
@@ -418,60 +376,6 @@ function Orders() {
               </div>
             </div>
 
-            <div className="popup-section">
-              <h3>Payment & Billing</h3>
-              <div className="form-grid">
-                <div className="form-group-third">
-                  <label>Total (₹)</label>
-                  <input
-                    type="number"
-                    value={editingOrder.totalAmount || ""}
-                    onChange={(e) => {
-                      const total = Number(e.target.value) || 0;
-                      setEditingOrder({
-                        ...editingOrder,
-                        totalAmount: total,
-                        balanceAmount: total - (Number(editingOrder.advanceAmount) || 0),
-                      });
-                    }}
-                  />
-                </div>
-                <div className="form-group-third">
-                  <label>Paid (₹)</label>
-                  <input
-                    type="number"
-                    value={editingOrder.advanceAmount || ""}
-                    onChange={(e) => {
-                      const adv = Number(e.target.value) || 0;
-                      setEditingOrder({
-                        ...editingOrder,
-                        advanceAmount: adv,
-                        balanceAmount: (Number(editingOrder.totalAmount) || 0) - adv,
-                      });
-                    }}
-                  />
-                </div>
-                <div className="form-group-third">
-                  <label>Balance (₹)</label>
-                  <input
-                    type="text"
-                    value={editingOrder.balanceAmount || 0}
-                    readOnly
-                    className="readonly-input"
-                  />
-                </div>
-                <div className="form-group-full">
-                  <label>Record New Payment (₹)</label>
-                  <input
-                    type="number"
-                    placeholder="Enter amount to add"
-                    value={newPaymentAmount}
-                    onChange={(e) => setNewPaymentAmount(e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
-
             <div className="popup-actions-row">
               <button className="btn-save" onClick={handleSaveEdit}>
                 Save Changes
@@ -498,53 +402,6 @@ function Orders() {
           </div>
         </div>
       )}
-
-      {/* Printable Report Section */}
-      <div className="print-only">
-        <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <h1 style={{ color: "#6d4c41", margin: "0 0 5px 0" }}>MIARA DESIGNER HOUSE</h1>
-          <h3 style={{ margin: 0, color: "#555" }}>Pending Orders Report</h3>
-          {fromDate && toDate && (
-            <p style={{ margin: "5px 0 0 0", fontSize: "14px" }}>
-              Period: {formatDateOnly(fromDate)} to {formatDateOnly(toDate)}
-            </p>
-          )}
-        </div>
-        <table className="print-table">
-          <thead>
-            <tr>
-              <th>Order Number</th>
-              <th>Order Date</th>
-              <th>Customer Name</th>
-              <th>Phone Number</th>
-              <th>Order Details / Items</th>
-              <th>Amount / Payment Status</th>
-              <th>Delivery Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredOrders.map((order) => (
-              <tr key={order.orderId}>
-                <td>{order.orderId}</td>
-                <td>{formatDateOnly(order.bookingDate)}</td>
-                <td>{order.customerName}</td>
-                <td>{order.phoneNumber}</td>
-                <td>
-                  {order.dressType} (Qty: {order.quantity})
-                </td>
-                <td>
-                  Total: ₹{order.totalAmount}
-                  <br />
-                  Paid: ₹{order.advanceAmount}
-                  <br />
-                  Bal: ₹{order.balanceAmount}
-                </td>
-                <td>{order.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
     </Layout>
   );
 }
