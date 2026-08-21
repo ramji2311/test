@@ -145,22 +145,6 @@ function Reports() {
             <h2>{report.completedOrders}</h2>
           </div>
 
-          <div
-            className="report-card"
-            onClick={() => handleReportClick("Today's Orders")}
-          >
-            <div className="card-header-with-print">
-              <h3>Today's Orders</h3>
-              <button
-                className="card-print-shortcut"
-                onClick={(e) => handleDirectPrint(e, "Today's Orders")}
-                title="Direct Print Today's Orders"
-              >
-                🖨️
-              </button>
-            </div>
-            <h2>{report.todaysOrders}</h2>
-          </div>
 
           <div
             className="report-card"
