@@ -232,6 +232,9 @@ function Reports() {
                     onChange={(e) => setToDate(e.target.value)}
                   />
                 </div>
+                <button className="print-btn" onClick={handlePrint}>
+                  🖨️ Print
+                </button>
               </div>
             )}
 
@@ -274,11 +277,6 @@ function Reports() {
             </div>
 
             <div className="popup-actions-wrapper">
-              {(selectedReport === "Pending Orders" || selectedReport === "Completed Orders") && (
-                <button className="print-btn" onClick={handlePrint}>
-                  🖨️ Print
-                </button>
-              )}
               <button className="close-btn" onClick={handleCloseReport}>
                 Close
               </button>
