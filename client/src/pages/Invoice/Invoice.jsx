@@ -1,22 +1,50 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getInvoice } from "../../services/invoiceService";
-import { formatDateTime12h, formatDateOnly } from "../../utils/dateFormatter";
+import { useParams, useNavigate } from "react-router-dom";
+import Layout from "../../components/Layout/Layout";
 import "./Invoice.css";
+import { getOrders } from "../../services/orderService";
+import { getTotalPaid } from "../../services/paymentService";
 
 function Invoice() {
   const { orderId } = useParams();
+  const navigate = useNavigate();
+
   const [order, setOrder] = useState(null);
+  const [alreadyPaid, setAlreadyPaid] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
 
     const loadInvoice = async () => {
-      const invoice = await getInvoice(orderId);
-      if (isMounted) {
-        setOrder(invoice || null);
-        setLoading(false);
+      try {
+        const orders = await getOrders();
+        const foundOrder = orders.find(
+          (item) => String(item.orderId) === String(orderId)
+        );
+
+        if (!foundOrder) {
+          if (isMounted) {
+            alert("Order not found.");
+            navigate("/orders");
+          }
+          return;
+        }
+
+        if (isMounted) {
+          setOrder(foundOrder);
+        }
+
+        const paid = await getTotalPaid(orderId);
+        if (isMounted) {
+          setAlreadyPaid(paid);
+        }
+      } catch (error) {
+        console.error("Error loading invoice:", error);
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
@@ -25,154 +53,185 @@ function Invoice() {
     return () => {
       isMounted = false;
     };
-  }, [orderId]);
+  }, [orderId, navigate]);
+
+  const formatDate = (date) => {
+    if (!date) return "-";
+    const d = new Date(date);
+    if (isNaN(d.getTime())) return "-";
+    return d.toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
 
   if (loading) {
-    return <h2>Loading Invoice...</h2>;
+    return (
+      <Layout>
+        <div className="invoice-loading">Loading invoice...</div>
+      </Layout>
+    );
   }
 
   if (!order) {
-    return <h2>Invoice Not Found</h2>;
+    return null;
   }
 
+  const balance = Number(order.totalAmount || 0) - alreadyPaid;
+
   return (
-    <div className="invoice-container">
+    <Layout>
+      <div className="invoice-page">
 
-      <div className="invoice">
+        {/* TOP BAR — hidden on print */}
+        <div className="invoice-top-bar">
+          <button className="back-button" onClick={() => navigate("/orders")}>
+            ← Back
+          </button>
 
-        {/* Header */}
-
-        <div className="invoice-header">
-
-          <h1>MIARA DESIGNER HOUSE</h1>
-
-          <p>
-            No.5 LIC Nagar,
-            <br />
-            Moolapalayam, Erode
-          </p>
-
-          <h3>INVOICE</h3>
-
+          <button className="print-button" onClick={handlePrint}>
+            🖨️ Print Invoice
+          </button>
         </div>
 
-        <hr />
+        {/* INVOICE SHEET */}
+        <div className="invoice-sheet">
 
-        {/* Invoice Info */}
+          {/* HEADER */}
+          <div className="invoice-header">
 
-        <div className="invoice-top">
+            <div className="invoice-brand">
+              <h1>MIARA</h1>
+              <p>Tailoring &amp; Designer House</p>
+              <p className="invoice-brand-contact">
+                📍 Your Shop Address, City, State — 000000<br />
+                📞 +91 00000 00000 &nbsp;|&nbsp; ✉️ contact@miara.in
+              </p>
+            </div>
 
-          <div>
-
-            <p><strong>Invoice No :</strong> {order.orderId}</p>
-
-            <p><strong>Date :</strong> {formatDateTime12h(order.bookingDate)}</p>
+            <div className="invoice-meta">
+              <h2>INVOICE</h2>
+              <div className="invoice-meta-row">
+                <span>Invoice No.</span>
+                <strong>#{order.orderId}</strong>
+              </div>
+              <div className="invoice-meta-row">
+                <span>Booking Date</span>
+                <strong>{formatDate(order.bookingDate)}</strong>
+              </div>
+              <div className="invoice-meta-row">
+                <span>Status</span>
+                <strong
+                  className={`invoice-status ${order.status
+                    ?.toLowerCase()
+                    .replace(/\s+/g, "-")}`}
+                >
+                  {order.status}
+                </strong>
+              </div>
+            </div>
 
           </div>
 
-          <div>
+          <div className="invoice-divider" />
 
-            <p><strong>Status :</strong> {order.status}</p>
+          {/* CUSTOMER + ORDER INFO */}
+          <div className="invoice-info-grid">
 
-            <p><strong>Delivery :</strong> {formatDateOnly(order.dueDate)}</p>
+            <div className="invoice-info-block">
+              <h3>Billed To</h3>
+              <p className="invoice-customer-name">{order.customerName}</p>
+              <p>{order.phoneNumber}</p>
+            </div>
+
+            <div className="invoice-info-block">
+              <h3>Order Details</h3>
+              <div className="invoice-info-row">
+                <span>Due Date</span>
+                <strong>{formatDate(order.dueDate)}</strong>
+              </div>
+              <div className="invoice-info-row">
+                <span>Delivery Date</span>
+                <strong>
+                  {formatDate(order.deliveryDate || order.deliveredDate)}
+                </strong>
+              </div>
+            </div>
 
           </div>
 
-        </div>
+          {/* ITEMS TABLE */}
+          <table className="invoice-table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th className="align-center">Quantity</th>
+                <th className="align-right">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <strong>{order.dressType}</strong>
+                  {order.remarks && (
+                    <div className="invoice-remarks">{order.remarks}</div>
+                  )}
+                </td>
+                <td className="align-center">{order.quantity || 1}</td>
+                <td className="align-right">
+                  ₹{Number(order.totalAmount || 0).toLocaleString("en-IN")}
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-        <hr />
+          {/* TOTALS */}
+          <div className="invoice-totals">
 
-        {/* Customer */}
+            <div className="invoice-totals-inner">
 
-        <h3 className="section-title">
-          Customer Details
-        </h3>
+              <div className="invoice-totals-row">
+                <span>Total Amount</span>
+                <strong>
+                  ₹{Number(order.totalAmount || 0).toLocaleString("en-IN")}
+                </strong>
+              </div>
 
-        <div className="customer-box">
+              <div className="invoice-totals-row">
+                <span>Amount Paid</span>
+                <strong className="paid-value">
+                  ₹{alreadyPaid.toLocaleString("en-IN")}
+                </strong>
+              </div>
 
-          <p><strong>Name :</strong> {order.customerName}</p>
+              <div className="invoice-totals-row balance-row">
+                <span>Balance Due</span>
+                <strong className={balance > 0 ? "due-value" : "settled-value"}>
+                  ₹{balance.toLocaleString("en-IN")}
+                </strong>
+              </div>
 
-          <p><strong>Phone :</strong> {order.phoneNumber}</p>
+            </div>
 
-        </div>
-
-        {/* Dress */}
-
-        <h3 className="section-title">
-          Order Details
-        </h3>
-
-        <table className="invoice-table">
-
-          <thead>
-
-            <tr>
-              <th>Dress Type</th>
-              <th>Qty</th>
-              <th>Amount</th>
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            <tr>
-              <td>{order.dressType}</td>
-              <td>{order.quantity}</td>
-              <td>₹ {order.totalAmount}</td>
-            </tr>
-
-          </tbody>
-
-        </table>
-
-        {/* Payment */}
-
-        <h3 className="section-title">
-          Payment Summary
-        </h3>
-
-        <div className="payment-box">
-
-          <div>
-            <span>Total Amount</span>
-            <strong>₹ {order.totalAmount}</strong>
           </div>
 
-          <div>
-            <span>Advance Paid</span>
-            <strong>₹ {order.advanceAmount}</strong>
-          </div>
-
-          <div className="balance-row">
-            <span>Balance</span>
-            <strong>₹ {order.balanceAmount}</strong>
+          {/* FOOTER */}
+          <div className="invoice-footer">
+            <p>Thank you for choosing MIARA. We look forward to serving you again.</p>
+            <p className="invoice-footer-note">
+              This is a computer-generated invoice and does not require a signature.
+            </p>
           </div>
 
         </div>
-
-        {/* Footer */}
-
-        <div className="invoice-footer">
-
-          <p>
-            Thank you for choosing
-          </p>
-
-          <h2>Miara Designer House ❤️</h2>
-
-        </div>
-
-        <button
-          className="print-btn"
-          onClick={() => window.print()}
-        >
-          🖨 Print Invoice
-        </button>
 
       </div>
-
-    </div>
+    </Layout>
   );
 }
 
