@@ -59,11 +59,30 @@ function Reports() {
 
   const filteredReportOrders = useMemo(() => {
     return reportOrders.filter((order) => {
-      if (selectedReport === "Pending Orders" || selectedReport === "Completed Orders") {
-        const orderDate = order.bookingDate ? order.bookingDate.split("T")[0] : "";
+      let orderDate = "";
+
+      if (selectedReport === "Pending Orders") {
+        // Pending → filter by Due Date
+        orderDate = order.dueDate
+          ? order.dueDate.split("T")[0]
+          : "";
+      }
+
+      if (selectedReport === "Completed Orders") {
+        // Completed → filter by Delivered Date
+        orderDate = order.deliveredDate
+          ? order.deliveredDate.split("T")[0]
+          : "";
+      }
+
+      if (
+        selectedReport === "Pending Orders" ||
+        selectedReport === "Completed Orders"
+      ) {
         if (fromDate && orderDate < fromDate) return false;
         if (toDate && orderDate > toDate) return false;
       }
+
       return true;
     });
   }, [reportOrders, selectedReport, fromDate, toDate]);
