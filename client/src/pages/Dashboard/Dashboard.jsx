@@ -22,13 +22,30 @@ function Dashboard() {
     upcomingDueOrders: [],
   });
 
+
+  // =========================
+  // LOAD DASHBOARD DATA
+  // =========================
+
   useEffect(() => {
 
     const loadDashboard = async () => {
 
-      const data = await getDashboardStats();
+      try {
 
-      setStats(data);
+        const data =
+          await getDashboardStats();
+
+        setStats(data);
+
+      } catch (error) {
+
+        console.error(
+          "Failed to load dashboard:",
+          error
+        );
+
+      }
 
     };
 
@@ -36,208 +53,453 @@ function Dashboard() {
 
   }, []);
 
+
+  // =========================
+  // PRINT PENDING ORDERS
+  // =========================
+
   const handlePrintPending = async () => {
+
     try {
-      const orders = await getOrdersByReport("Pending Orders");
-      printReport("Pending Orders", orders);
+
+      const orders =
+        await getOrdersByReport(
+          "Pending Orders"
+        );
+
+      printReport(
+        "Pending Orders",
+        orders
+      );
+
     } catch (error) {
-      console.error("Error direct printing pending orders:", error);
-      alert("Failed to print report.");
+
+      console.error(
+        "Error direct printing pending orders:",
+        error
+      );
+
+      alert(
+        "Failed to print report."
+      );
+
     }
+
   };
 
+
   return (
+
     <div className="dashboard">
 
-      {/* Header */}
+
+      {/* =========================
+          HEADER
+      ========================= */}
 
       <Header />
 
-      {/* Dashboard Cards */}
+
+      {/* =========================
+          DASHBOARD CARDS
+      ========================= */}
 
       <section className="dashboard-cards">
 
+
+        {/* TODAY'S ORDERS */}
+
         <div className="card orders-card">
-          <h3>Today's Orders</h3>
-          <h2>{stats.todaysOrders}</h2>
+
+          <h3>
+            Today's Orders
+          </h3>
+
+          <h2>
+            {stats.todaysOrders}
+          </h2>
+
         </div>
+
+
+        {/* DUE TODAY */}
 
         <div className="card delivery-card">
-          <h3>Due Today</h3>
-          <h2>{stats.dueToday}</h2>
+
+          <h3>
+            Due Today
+          </h3>
+
+          <h2>
+            {stats.dueToday}
+          </h2>
+
         </div>
+
+
+        {/* PENDING ORDERS */}
 
         <div className="card pending-card">
-          <h3>Pending Orders</h3>
-          <h2>{stats.pendingOrders}</h2>
+
+          <h3>
+            Pending Orders
+          </h3>
+
+          <h2>
+            {stats.pendingOrders}
+          </h2>
+
         </div>
 
+
+        {/* COMPLETED ORDERS */}
+
         <div className="card completed-card">
-          <h3>Completed Orders</h3>
-          <h2>{stats.completedOrders}</h2>
+
+          <h3>
+            Completed Orders
+          </h3>
+
+          <h2>
+            {stats.completedOrders}
+          </h2>
+
         </div>
+
 
       </section>
 
-      {/* Quick Actions */}
+
+      {/* =========================
+          QUICK ACTIONS
+      ========================= */}
 
       <section className="quick-actions">
 
-        <h2>Quick Actions</h2>
+        <h2>
+          Quick Actions
+        </h2>
+
 
         <div className="button-grid">
 
-          <button onClick={() => navigate("/new-order")}>
+
+          {/* NEW ORDER */}
+
+          <button
+            onClick={() =>
+              navigate("/new-order")
+            }
+          >
             ➕ New Order
           </button>
 
-          <button onClick={() => navigate("/orders")}>
+
+          {/* ORDERS */}
+
+          <button
+            onClick={() =>
+              navigate("/orders")
+            }
+          >
             📋 Orders
           </button>
 
-          <button onClick={() => navigate("/customers")}>
+
+          {/* CUSTOMERS */}
+
+          <button
+            onClick={() =>
+              navigate("/customers")
+            }
+          >
             👤 Customers
           </button>
 
-          <button onClick={() => navigate("/calendar")}>
+
+          {/* EMPLOYEES */}
+
+          <button
+            onClick={() =>
+              navigate("/employees")
+            }
+          >
+            👥 Employees
+          </button>
+
+
+          {/* CALENDAR */}
+
+          <button
+            onClick={() =>
+              navigate("/calendar")
+            }
+          >
             📅 Calendar
           </button>
 
-          <button onClick={() => navigate("/reports")}>
+
+          {/* REPORTS */}
+
+          <button
+            onClick={() =>
+              navigate("/reports")
+            }
+          >
             📊 Reports
           </button>
 
-          <button onClick={() => navigate("/settings")}>
+
+          {/* SETTINGS */}
+
+          <button
+            onClick={() =>
+              navigate("/settings")
+            }
+          >
             ⚙️ Settings
           </button>
 
-          <button className="print-action-btn" onClick={handlePrintPending}>
+
+          {/* PRINT PENDING */}
+
+          <button
+            className="print-action-btn"
+            onClick={
+              handlePrintPending
+            }
+          >
             🖨️ Print Pending
           </button>
 
+
         </div>
 
       </section>
 
-      {/* Recent Orders */}
+
+      {/* =========================
+          RECENT ORDERS
+      ========================= */}
 
       <section className="recent-orders">
 
-        <h2>Recent Orders</h2>
+        <h2>
+          Recent Orders
+        </h2>
+
 
         <div className="table-responsive">
+
           <table>
 
             <thead>
 
               <tr>
-                <th>Order ID</th>
-                <th>Customer</th>
-                <th>Dress Type</th>
-                <th>Due Date</th>
-                <th>Status</th>
+
+                <th>
+                  Order ID
+                </th>
+
+                <th>
+                  Customer
+                </th>
+
+                <th>
+                  Dress Type
+                </th>
+
+                <th>
+                  Due Date
+                </th>
+
+                <th>
+                  Status
+                </th>
+
               </tr>
 
             </thead>
 
+
             <tbody>
 
-              {stats.recentOrders.length === 0 ? (
+              {stats.recentOrders.length ===
+              0 ? (
 
                 <tr>
+
                   <td colSpan="5">
                     No Orders Available
                   </td>
+
                 </tr>
 
               ) : (
 
-                stats.recentOrders.map((order) => (
+                stats.recentOrders.map(
+                  (order) => (
 
-                  <tr key={order.orderId}>
+                    <tr
+                      key={
+                        order.orderId
+                      }
+                    >
 
-                    <td>{order.orderId}</td>
+                      <td>
+                        {
+                          order.orderId
+                        }
+                      </td>
 
-                    <td>{order.customerName}</td>
+                      <td>
+                        {
+                          order.customerName
+                        }
+                      </td>
 
-                    <td>{order.dressType}</td>
+                      <td>
+                        {
+                          order.dressType
+                        }
+                      </td>
 
-                    <td>{formatDateOnly(order.dueDate)}</td>
+                      <td>
+                        {formatDateOnly(
+                          order.dueDate
+                        )}
+                      </td>
 
-                    <td>{order.status}</td>
+                      <td>
+                        {
+                          order.status
+                        }
+                      </td>
 
-                  </tr>
+                    </tr>
 
-                ))
+                  )
+                )
 
               )}
 
             </tbody>
 
           </table>
+
         </div>
 
       </section>
 
-      {/* Upcoming Due Orders */}
+
+      {/* =========================
+          UPCOMING DUE ORDERS
+      ========================= */}
 
       <section className="recent-orders">
 
-        <h2>Upcoming Due Orders</h2>
+        <h2>
+          Upcoming Due Orders
+        </h2>
+
 
         <div className="table-responsive">
+
           <table>
 
             <thead>
 
               <tr>
-                <th>Customer</th>
-                <th>Dress</th>
-                <th>Due Date</th>
-                <th>Status</th>
+
+                <th>
+                  Customer
+                </th>
+
+                <th>
+                  Dress
+                </th>
+
+                <th>
+                  Due Date
+                </th>
+
+                <th>
+                  Status
+                </th>
+
               </tr>
 
             </thead>
 
+
             <tbody>
 
-              {stats.upcomingDueOrders.length === 0 ? (
+              {stats.upcomingDueOrders.length ===
+              0 ? (
 
                 <tr>
+
                   <td colSpan="4">
                     No Upcoming Orders
                   </td>
+
                 </tr>
 
               ) : (
 
-                stats.upcomingDueOrders.map((order) => (
+                stats.upcomingDueOrders.map(
+                  (order) => (
 
-                  <tr key={order.orderId}>
+                    <tr
+                      key={
+                        order.orderId
+                      }
+                    >
 
-                    <td>{order.customerName}</td>
+                      <td>
+                        {
+                          order.customerName
+                        }
+                      </td>
 
-                    <td>{order.dressType}</td>
+                      <td>
+                        {
+                          order.dressType
+                        }
+                      </td>
 
-                    <td>{formatDateOnly(order.dueDate)}</td>
+                      <td>
+                        {formatDateOnly(
+                          order.dueDate
+                        )}
+                      </td>
 
-                    <td>{order.status}</td>
+                      <td>
+                        {
+                          order.status
+                        }
+                      </td>
 
-                  </tr>
+                    </tr>
 
-                ))
+                  )
+                )
 
               )}
 
             </tbody>
 
           </table>
+
         </div>
 
       </section>
 
+
     </div>
+
   );
+
 }
 
 export default Dashboard;

@@ -132,9 +132,9 @@ function Settings() {
 
           <p><strong>Application :</strong> Miara Designer House ERP</p>
 
-          <p><strong>Version :</strong> 1.0</p>
+          <p><strong>Version :</strong> 2.0</p>
 
-          <p><strong>Developed By :</strong> Ramya Kishore</p>
+          <p><strong>Developed By :</strong> Raman Kishore</p>
 
         </div>
 

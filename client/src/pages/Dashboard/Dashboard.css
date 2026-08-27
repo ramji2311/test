@@ -169,3 +169,93 @@ body {
     font-size: 14px;
   }
 }
+/* =========================
+   FINANCIAL CARDS
+========================= */
+
+.dashboard-financial-cards {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 20px;
+
+  margin: 25px 0;
+}
+
+.financial-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 24px;
+
+  background: white;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.06);
+
+  border: 1px solid #eee5e1;
+}
+
+.financial-card-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #f5eeeb;
+
+  font-size: 25px;
+
+  flex-shrink: 0;
+}
+
+.financial-card h3 {
+  margin: 0 0 7px;
+
+  color: #6d6d6d;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.financial-card h2 {
+  margin: 0;
+
+  color: #39251e;
+
+  font-size: 26px;
+
+  font-weight: 700;
+}
+
+.financial-card p {
+  margin: 5px 0 0;
+
+  color: #888;
+
+  font-size: 12px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+
+  .dashboard-financial-cards {
+    grid-template-columns: 1fr;
+  }
+
+}
