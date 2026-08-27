@@ -1,12 +1,16 @@
 import { getOrders } from "./orderService";
-import { getPayments } from "./paymentService";
 
 export const getReportData = async () => {
   try {
     const orders = await getOrders();
-    const payments = await getPayments();
 
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date()
+      .toISOString()
+      .split("T")[0];
+
+    // =====================================================
+    // ORDER COUNTS
+    // =====================================================
 
     const totalOrders = orders.length;
 
@@ -20,29 +24,73 @@ export const getReportData = async () => {
         order.status === "Delivered"
     ).length;
 
-    // Orders due today
+    // =====================================================
+    // TODAY'S ORDERS
+    // =====================================================
+
     const todaysOrders = orders.filter(
       (order) => order.dueDate === today
     ).length;
 
-    // Orders delivered today
+    // =====================================================
+    // TODAY'S DELIVERIES
+    // =====================================================
+
     const todaysDeliveries = orders.filter(
       (order) =>
         order.deliveredDate === today &&
         order.status === "Delivered"
     ).length;
 
+    // =====================================================
+    // TOTAL REVENUE
+    //
+    // ALL ORDERS
+    // =====================================================
+
     const totalRevenue = orders.reduce(
-      (sum, order) => sum + Number(order.totalAmount || 0),
+      (sum, order) =>
+        sum + Number(order.totalAmount || 0),
       0
     );
 
-    const paymentReceived = payments.reduce(
-      (sum, payment) => sum + Number(payment.amount || 0),
-      0
+    // =====================================================
+    // COMPLETED / DELIVERED ORDERS
+    // =====================================================
+
+    const completedDeliveredOrders = orders.filter(
+      (order) =>
+        order.status === "Completed" ||
+        order.status === "Delivered"
     );
 
-    const pendingBalance = totalRevenue - paymentReceived;
+    // =====================================================
+    // PAYMENT RECEIVED
+    //
+    // ONLY COMPLETED / DELIVERED ORDERS
+    //
+    // Uses the advance amount stored on the order.
+    // =====================================================
+
+    const paymentReceived =
+      completedDeliveredOrders.reduce(
+        (sum, order) =>
+          sum + Number(order.advanceAmount || 0),
+        0
+      );
+
+    // =====================================================
+    // PENDING BALANCE
+    // =====================================================
+
+    const pendingBalance = Math.max(
+      0,
+      totalRevenue - paymentReceived
+    );
+
+    // =====================================================
+    // RETURN REPORT
+    // =====================================================
 
     return {
       totalOrders,
@@ -50,18 +98,26 @@ export const getReportData = async () => {
       completedOrders,
       todaysOrders,
       todaysDeliveries,
+
       totalRevenue,
       paymentReceived,
       pendingBalance,
     };
+
   } catch (error) {
-    console.error("Error fetching report data:", error);
+
+    console.error(
+      "Error fetching report data:",
+      error
+    );
+
     return {
       totalOrders: 0,
       pendingOrders: 0,
       completedOrders: 0,
       todaysOrders: 0,
       todaysDeliveries: 0,
+
       totalRevenue: 0,
       paymentReceived: 0,
       pendingBalance: 0,
@@ -69,20 +125,33 @@ export const getReportData = async () => {
   }
 };
 
+
+// =====================================================
+// REPORT ORDER LISTS
+// =====================================================
+
 export const getOrdersByReport = async (type) => {
+
   try {
+
     const orders = await getOrders();
 
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date()
+      .toISOString()
+      .split("T")[0];
 
     switch (type) {
+
       case "Total Orders":
         return orders;
 
+
       case "Pending Orders":
         return orders.filter(
-          (order) => order.status === "Pending"
+          (order) =>
+            order.status === "Pending"
         );
+
 
       case "Completed Orders":
         return orders.filter(
@@ -91,10 +160,13 @@ export const getOrdersByReport = async (type) => {
             order.status === "Delivered"
         );
 
+
       case "Today's Orders":
         return orders.filter(
-          (order) => order.dueDate === today
+          (order) =>
+            order.dueDate === today
         );
+
 
       case "Today's Deliveries":
         return orders.filter(
@@ -103,11 +175,18 @@ export const getOrdersByReport = async (type) => {
             order.status === "Delivered"
         );
 
+
       default:
         return [];
     }
+
   } catch (error) {
-    console.error("Error fetching orders by report:", error);
+
+    console.error(
+      "Error fetching orders by report:",
+      error
+    );
+
     return [];
   }
 };

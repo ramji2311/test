@@ -1,3 +1,7 @@
+/* =========================
+   REPORTS CONTAINER
+========================= */
+
 .reports-container {
   width: 100%;
 }
@@ -7,18 +11,33 @@
   margin-bottom: 30px;
 }
 
+
+/* =========================
+   REPORT CARDS
+========================= */
+
 .report-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(240px, 1fr));
+
   gap: 20px;
 }
 
 .report-card {
   background: white;
+
   border-radius: 12px;
+
   padding: 25px;
-  box-shadow: 0 4px 12px rgba(0,0,0,.08);
-  transition: .3s;
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.08);
+
+  transition: 0.3s;
+
+  cursor: pointer;
 }
 
 .report-card:hover {
@@ -27,44 +46,419 @@
 
 .report-card h3 {
   color: #777;
+
   font-size: 16px;
+
   margin-bottom: 15px;
 }
 
 .report-card h2 {
   color: #6D4C41;
+
   font-size: 32px;
-}
-.report-card{
 
-cursor:pointer;
-
+  margin: 0;
 }
 
-/* Reports Popup & Responsive Table Styles */
+
+/* =========================
+   CARD HEADER + PRINT
+========================= */
+
+.card-header-with-print {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 15px;
+
+  width: 100%;
+}
+
+.card-header-with-print h3 {
+  margin: 0;
+
+  color: #777;
+
+  font-size: 16px;
+}
+
+.card-print-shortcut {
+  background: none;
+
+  border: none;
+
+  font-size: 18px;
+
+  cursor: pointer;
+
+  padding: 4px 8px;
+
+  border-radius: 4px;
+
+  transition:
+    transform 0.2s,
+    background-color 0.2s;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+.card-print-shortcut:hover {
+  background-color:
+    rgba(109, 76, 65, 0.1);
+
+  transform: scale(1.15);
+}
+
+
+/* =====================================================
+   BUSINESS PERFORMANCE CHART SECTION
+===================================================== */
+
+.reports-chart-section {
+  width: 100%;
+
+  margin-top: 30px;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  background: white;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.reports-chart-section h2 {
+  margin: 0;
+
+  color: #6D4C41;
+
+  font-size: 22px;
+}
+
+.chart-description {
+  margin: 7px 0 30px;
+
+  color: #777;
+
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   CHART GRID
+===================================================== */
+
+.vertical-charts {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 25px;
+
+  margin-top: 25px;
+}
+
+
+/* =====================================================
+   INDIVIDUAL CHART CARD
+===================================================== */
+
+.vertical-chart-card {
+  background: #fdfbf9;
+
+  border: 1px solid #eadfd9;
+
+  border-radius: 12px;
+
+  padding: 25px;
+
+  box-sizing: border-box;
+}
+
+.vertical-chart-card h3 {
+  margin: 0;
+
+  color: #5D4037;
+
+  font-size: 18px;
+}
+
+.vertical-chart-card p {
+  margin: 6px 0 20px;
+
+  color: #888;
+
+  font-size: 13px;
+}
+
+
+/* =====================================================
+   VERTICAL BAR GRAPH
+===================================================== */
+
+.vertical-bar-chart {
+  height: 300px;
+
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-around;
+
+  gap: 25px;
+
+  padding: 20px 15px 0;
+
+  box-sizing: border-box;
+
+  border-bottom: 2px solid #d9cec9;
+
+  position: relative;
+}
+
+
+/* =====================================================
+   BAR GROUP
+===================================================== */
+
+.vertical-bar-group {
+  height: 100%;
+
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: flex-end;
+
+  align-items: center;
+
+  min-width: 60px;
+}
+
+
+/* =====================================================
+   VALUE ABOVE BAR
+===================================================== */
+
+.vertical-bar-value {
+  min-height: 24px;
+
+  margin-bottom: 7px;
+
+  color: #4a4a4a;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  text-align: center;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   BAR
+===================================================== */
+
+.vertical-bar {
+  width: 55px;
+
+  min-height: 3px;
+
+  border-radius:
+    7px 7px 0 0;
+
+  transition:
+    height 0.5s ease;
+
+  position: relative;
+}
+
+
+/* =====================================================
+   ORDER COLORS
+===================================================== */
+
+.orders-bar {
+  background: #6D4C41;
+}
+
+.completed-bar {
+  background: #4CAF50;
+}
+
+.pending-bar {
+  background: #E6A23C;
+}
+
+
+/* =====================================================
+   FINANCIAL COLORS
+===================================================== */
+
+.revenue-bar {
+  background: #6D4C41;
+}
+
+.received-bar {
+  background: #4CAF50;
+}
+
+.balance-bar {
+  background: #D96C5F;
+}
+
+
+/* =====================================================
+   BAR LABEL
+===================================================== */
+
+.vertical-bar-label {
+  margin-top: 12px;
+
+  color: #555;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  text-align: center;
+
+  line-height: 1.3;
+}
+
+
+/* =====================================================
+   REVENUE SECTION
+===================================================== */
+
+.revenue-chart-title {
+  margin-top: 35px !important;
+
+  margin-bottom: 5px !important;
+}
+
+
+/* =====================================================
+   CHART LEGEND
+===================================================== */
+
+.chart-legend {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 20px;
+
+  margin-top: 20px;
+}
+
+.chart-legend-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #666;
+
+  font-size: 13px;
+}
+
+.chart-legend-dot {
+  width: 11px;
+
+  height: 11px;
+
+  border-radius: 50%;
+}
+
+.legend-orders {
+  background: #6D4C41;
+}
+
+.legend-completed {
+  background: #4CAF50;
+}
+
+.legend-pending {
+  background: #E6A23C;
+}
+
+.legend-revenue {
+  background: #6D4C41;
+}
+
+.legend-received {
+  background: #4CAF50;
+}
+
+.legend-balance {
+  background: #D96C5F;
+}
+
+
+/* =====================================================
+   POPUP
+===================================================== */
+
 .reports-container .popup {
   width: 90%;
+
   max-width: 900px;
 }
 
+
+/* =====================================================
+   POPUP ACTIONS
+===================================================== */
+
 .popup-actions-wrapper {
   display: flex;
+
   justify-content: flex-end;
+
   gap: 12px;
+
   margin-top: 20px;
 }
 
 .popup-actions-wrapper button {
   padding: 10px 20px;
+
   border: none;
+
   border-radius: 6px;
+
   cursor: pointer;
+
   font-weight: 600;
+
   transition: 0.2s;
 }
 
 .popup-actions-wrapper .print-btn {
   background-color: #6D4C41;
+
   color: white;
 }
 
@@ -74,6 +468,7 @@ cursor:pointer;
 
 .popup-actions-wrapper .close-btn {
   background-color: #e0e0e0;
+
   color: #333;
 }
 
@@ -81,69 +476,56 @@ cursor:pointer;
   background-color: #d5d5d5;
 }
 
-/* Card Print Shortcut Styling */
-.card-header-with-print {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-  width: 100%;
-}
 
-.card-header-with-print h3 {
-  margin: 0;
-  color: #777;
-  font-size: 16px;
-}
+/* =====================================================
+   DATE FILTERS
+===================================================== */
 
-.card-print-shortcut {
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 4px;
-  transition: transform 0.2s, background-color 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.card-print-shortcut:hover {
-  background-color: rgba(109, 76, 65, 0.1);
-  transform: scale(1.15);
-}
-
-/* Date Filters Inside Popup styling */
 .popup-date-filters {
   display: flex;
+
   gap: 20px;
+
   margin-bottom: 20px;
+
   background: #fdfbf7;
+
   padding: 15px;
+
   border-radius: 8px;
+
   border: 1px solid #ebdcd0;
+
   justify-content: center;
 }
 
 .popup-date-field {
   display: flex;
+
   align-items: center;
+
   gap: 8px;
 }
 
 .popup-date-field label {
   font-size: 13px;
+
   font-weight: 600;
+
   color: #5d4037;
 }
 
 .popup-date-field input {
   padding: 8px 12px;
+
   border: 1px solid #d7ccc8;
+
   border-radius: 8px;
+
   font-size: 13px;
+
   outline: none;
+
   background: white;
 }
 
@@ -151,16 +533,299 @@ cursor:pointer;
   border-color: #6d4c41;
 }
 
+
+/* =====================================================
+   TABLE RESPONSIVE
+===================================================== */
+
+.table-responsive {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 900px) {
+
+  .vertical-charts {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
 @media (max-width: 600px) {
+
+  .reports-chart-section {
+    padding: 20px;
+  }
+
+  .vertical-chart-card {
+    padding: 18px;
+  }
+
+  .vertical-bar-chart {
+    height: 260px;
+
+    gap: 10px;
+
+    padding-left: 5px;
+
+    padding-right: 5px;
+  }
+
+  .vertical-bar {
+    width: 42px;
+  }
+
+  .vertical-bar-label {
+    font-size: 11px;
+  }
+
+  .vertical-bar-value {
+    font-size: 11px;
+  }
+
   .popup-date-filters {
     flex-direction: column;
+
     gap: 10px;
+
     align-items: stretch;
   }
+
   .popup-date-field {
     justify-content: space-between;
   }
+
   .popup-date-field input {
     width: 65%;
   }
+
+}
+
+
+/* =====================================================
+   VERY SMALL SCREENS
+===================================================== */
+
+@media (max-width: 400px) {
+
+  .vertical-bar-chart {
+    gap: 5px;
+  }
+
+  .vertical-bar {
+    width: 32px;
+  }
+
+  .vertical-bar-label {
+    font-size: 10px;
+  }
+
+}
+/* =====================================================
+   REPORT CHARTS
+===================================================== */
+
+.report-chart-section {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px;
+  margin-top: 28px;
+  border: 1px solid #eadfd9;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+
+.report-chart-header {
+  margin-bottom: 20px;
+}
+
+
+.report-chart-header h2 {
+  margin: 0 0 6px;
+  color: #4e342e;
+  font-size: 22px;
+}
+
+
+.report-chart-header p {
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+}
+
+
+.report-chart-container {
+  width: 100%;
+  height: 380px;
+}
+
+
+/* =====================================================
+   RESPONSIVE CHARTS
+===================================================== */
+
+@media (max-width: 700px) {
+
+  .report-chart-section {
+    padding: 18px;
+  }
+
+  .report-chart-container {
+    height: 320px;
+  }
+
+}
+/* =====================================================
+   CHARTS ROW
+===================================================== */
+
+.charts-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+
+/* =====================================================
+   CHART CARD
+===================================================== */
+
+.report-chart-section {
+  background: #ffffff;
+  border: 1px solid #eadfd9;
+  border-radius: 14px;
+  padding: 18px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  min-width: 0;
+}
+
+
+/* =====================================================
+   CHART HEADER
+===================================================== */
+
+.report-chart-header {
+  margin-bottom: 8px;
+}
+
+.report-chart-header h2 {
+  margin: 0 0 5px;
+
+  color: #4e342e;
+
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.report-chart-header p {
+  margin: 0;
+
+  color: #777;
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+
+/* =====================================================
+   CHART CONTAINER
+===================================================== */
+
+.report-chart-container {
+  width: 100%;
+  height: 260px;
+  margin-top: 8px;
+}
+
+
+/* =====================================================
+   CHART LEGEND
+===================================================== */
+
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 15px;
+
+  flex-wrap: wrap;
+
+  margin-top: 4px;
+
+  font-size: 11px;
+  color: #555;
+}
+
+.chart-legend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.chart-legend i {
+  width: 8px;
+  height: 8px;
+
+  display: inline-block;
+
+  border-radius: 1px;
+}
+
+.legend-blue {
+  background: #3b82f6;
+}
+
+.legend-green {
+  background: #22c55e;
+}
+
+.legend-orange {
+  background: #f97316;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+  .charts-row {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .report-chart-section {
+    padding: 14px;
+  }
+
+  .report-chart-container {
+    height: 230px;
+  }
+
+  .report-chart-header h2 {
+    font-size: 17px;
+  }
+
+  .chart-legend {
+    gap: 10px;
+    font-size: 10px;
+  }
+
 }

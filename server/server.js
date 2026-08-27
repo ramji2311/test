@@ -59,6 +59,7 @@ app.get("/api/db-status", (req, res) => {
 // const dashboardRoutes = require("./routes/dashboardRoutes");
 // const measurementRoutes = require("./routes/measurementRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const tailorRoutes = require("./routes/tailorRoutes");
 // const paymentRoutes = require("./routes/paymentRoutes");
 // const reportRoutes = require("./routes/reportRoutes");
 
@@ -70,6 +71,7 @@ const orderRoutes = require("./routes/orderRoutes");
 // app.use("/api/dashboard", dashboardRoutes);
 // app.use("/api/measurements", measurementRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/tailors", tailorRoutes);
 // app.use("/api/payments", paymentRoutes);
 // app.use("/api/reports", reportRoutes);
 

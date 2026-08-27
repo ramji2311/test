@@ -7,30 +7,27 @@ import {
   FaCalendar,
   FaChartBar,
   FaCog,
+  FaMoneyBillWave,
+  FaUserFriends,
 } from "react-icons/fa";
 
 import "./Sidebar.css";
 
 function Sidebar() {
-
   return (
-
     <aside className="sidebar">
 
       <div className="logo">
-
         <h2>MIARA</h2>
-
         <p>Designer House</p>
-
       </div>
 
       <nav>
 
-       <NavLink to="/dashboard">
-  <FaHome />
-  Dashboard
-</NavLink>
+        <NavLink to="/dashboard">
+          <FaHome />
+          Dashboard
+        </NavLink>
 
         <NavLink to="/new-order">
           <FaPlus />
@@ -52,6 +49,16 @@ function Sidebar() {
           Calendar
         </NavLink>
 
+        <NavLink to="/employees">
+          <FaUserFriends />
+          Employees
+        </NavLink>
+
+        <NavLink to="/salary">
+          <FaMoneyBillWave />
+          Salary
+        </NavLink>
+
         <NavLink to="/reports">
           <FaChartBar />
           Reports
@@ -65,7 +72,6 @@ function Sidebar() {
       </nav>
 
     </aside>
-
   );
 }
 

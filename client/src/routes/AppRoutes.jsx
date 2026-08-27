@@ -1,18 +1,31 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
 import Login from "../pages/Login/Login";
+
 import Dashboard from "../pages/Dashboard/Dashboard";
+
 import NewOrder from "../pages/NewOrder/NewOrder";
+
 import Orders from "../pages/Orders/Orders";
 import Customers from "../pages/Customers/Customers";
+
 import Calendar from "../pages/Calendar/Calendar";
+
 import Reports from "../pages/Reports/Reports";
 import Settings from "../pages/Settings/Settings";
+
 import Invoice from "../pages/Invoice/Invoice";
+
 import Measurements from "../pages/Measurements/Measurements";
 
-import ProtectedRoute from "../ProtectedRoute";
+import Employees from "../pages/Employees/Employees";
 
+import ProtectedRoute from "../ProtectedRoute";
+import Tailors from "../pages/Tailors/Tailors";
+
+import SalarySlip from "../pages/SalarySlip/SalarySlip";
+
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Layout from "../components/Layout/Layout";
+import Salary from "../pages/Salary/Salary";
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -78,7 +91,16 @@ export default function AppRoutes() {
             </ProtectedRoute>
           }
         />
-
+<Route
+  path="/tailors"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        <Tailors />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
         {/* Calendar */}
         <Route
           path="/calendar"
@@ -109,6 +131,18 @@ export default function AppRoutes() {
           }
         />
 
+        {/* Employees */}
+      <Route
+  path="/employees"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        <Employees />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
+
         {/* Invoice */}
         <Route
           path="/invoice/:orderId"
@@ -118,7 +152,27 @@ export default function AppRoutes() {
             </ProtectedRoute>
           }
         />
+<Route
+  path="/salary"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        <Salary />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
 
+<Route
+  path="/salary-slip"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        <SalarySlip />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
         {/* Fallback */}
         <Route
           path="*"
