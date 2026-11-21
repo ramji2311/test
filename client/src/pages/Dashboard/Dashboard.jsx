@@ -1,5 +1,7 @@
+
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Header from "../../components/Header/Header";
 import "./Dashboard.css";
 import { getDashboardStats } from "../../services/dashboardService";
 import { getOrdersByReport } from "../../services/reportService";
@@ -10,6 +12,7 @@ function Dashboard() {
   const navigate = useNavigate();
 
   const [stats, setStats] = useState({
+    totalOrders: 0,
     todaysOrders: 0,
     dueToday: 0,
     pendingOrders: 0,
@@ -36,7 +39,6 @@ function Dashboard() {
   const handlePrintPending = async () => {
     try {
       const orders = await getOrdersByReport("Pending Orders");
-
       printReport("Pending Orders", orders);
     } catch (error) {
       console.error("Error direct printing pending orders:", error);
@@ -46,11 +48,16 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
-
       <Header />
 
       {/* DASHBOARD CARDS */}
       <section className="dashboard-cards">
+
+        <div className="card total-orders-card">
+          <h3>Total Orders</h3>
+          <h2>{stats.totalOrders}</h2>
+        </div>
+
         <div className="card orders-card">
           <h3>Today's Orders</h3>
           <h2>{stats.todaysOrders}</h2>
@@ -70,6 +77,7 @@ function Dashboard() {
           <h3>Completed Orders</h3>
           <h2>{stats.completedOrders}</h2>
         </div>
+
       </section>
 
       {/* QUICK ACTIONS */}
@@ -161,7 +169,7 @@ function Dashboard() {
               <tr>
                 <th>Order ID</th>
                 <th>Customer</th>
-                <th>Dress</th>
+                <th>Dress Type</th>
                 <th>Due Date</th>
                 <th>Status</th>
               </tr>
@@ -187,7 +195,6 @@ function Dashboard() {
           </table>
         </div>
       </section>
-
     </div>
   );
 }

@@ -456,15 +456,22 @@
   transition: 0.2s;
 }
 
-.popup-actions-wrapper .print-btn {
-  background-color: #6D4C41;
 
-  color: white;
+.print-btn {
+  background-color: #16a34a;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-.popup-actions-wrapper .print-btn:hover {
-  background-color: #5D4037;
+.print-btn:hover {
+  background-color: #15803d;
 }
+
 
 .popup-actions-wrapper .close-btn {
   background-color: #e0e0e0;
